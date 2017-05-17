@@ -46,3 +46,18 @@ ul.posts li {
     list-style: none;
     margin-bottom: 10px;
 }
+.img-m {
+    width: 20%;
+    min-width: 600px;
+    max-width: 800px;
+}
+.tip-s {
+    font-size: 14px;
+}
+.content {
+    background: #f7f7f7;
+    font-size: 14px;
+    padding: 16px;
+    border: 1px solid #E6E8E9;
+    line-height: 1.8;
+}
