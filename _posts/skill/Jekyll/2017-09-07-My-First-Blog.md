@@ -2,7 +2,7 @@
 layout: post
 title: "新手推荐 - 如何搭建一个技术博客"
 data: 2017-09-07 16:04:00 +0800
-categories: 学习经历
+categories: 站点建设
 tag: Jekyll
 ---
 * content
