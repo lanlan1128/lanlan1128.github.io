@@ -1,0 +1,120 @@
+I"�2<ul id="markdown-toc">
+  <li><a href="#session" id="markdown-toc-session">session</a></li>
+  <li><a href="#在nodejsexpress中使用session" id="markdown-toc-在nodejsexpress中使用session">在nodejs+express中使用session</a></li>
+  <li><a href="#登录验证demo" id="markdown-toc-登录验证demo">登录验证Demo</a></li>
+</ul>
+
+<p>介绍session的工作原理</p>
+
+<!-- more -->
+
+<hr />
+
+<h2 id="session">session</h2>
+<p>当你要理解一项技术的技术的时候，可以从这项技术的应用场景开始理解。这样才能由浅入深。
+我一开始需要用到session是在做登录验证的时候，通过网上博文了解session的工作原理。 <a href="http://blog.csdn.net/u013865275/article/details/51159102">关于用户登录session</a>这篇文章的描写通俗易懂，是一篇非常好的文章。</p>
+
+<p>下面贴出文章的内容</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>首先我们先来了解一下什么是session。其实session就是一块在服务器端开辟的内存空间，就好比客户在服务器端的账户，它们被服务器保存到一个Map中，这个Map被称之为session缓存。session的作用是来跟踪用户的操作状态。
+
+我们举个例子，比如：服务器端要知道一个当前网站有多少用户在线。我们知道一个用户就一个客户端，那么也就是说服务器端要知道有多少客户端正在访问本网 站，这样服务器端必然要跟踪每一个客户端的状态。
+
+那么服务器是通过什么跟踪的呢？又是怎么跟踪的呢？哈哈，其实这个问题很简单，比如张三下班后打开电脑，今天第一次访问某宝网站，张三的电脑向某宝网站发出了请求，某宝网站我现 在要访问你，这时呢某宝网站说请出示你的证件，张三的电脑傻了问“证件？？？”这时某宝网站说是今天第一次来访吧，张三的电 脑说是啊，某宝的网站说那就对了看在你诚实的份上给你一个证件吧(这里的证件就是我们说的 sessionID，sessionID:是32位的字母和数字的组合是全地球唯一的，因为sessionID是唯一的所以它的作用是用来区分每个客户端 的，此ID是在session被创建时产生的，而session我们看到了是在第一次访问网站时就会被建立。sessionID会随着应答一起发到客户端 并存放到客户端的内存中，这块客户端的内存就是我们经常说的cookie，下次用户发出请求时，浏览器通过一定规则将本地cookie里的sessionid发送，一一匹配，这样服务器看到 sessionID后到内存寻找，找到了就使用此内存中的数据，否则视为第一次访问本网站)，不过这个证件的有效期只有15分钟，这里的有 效期15分钟，就是我们说的session过期时间。
+
+什么是session过期时间呢？是这样的，我们想一下我们第一次访问一个网站，这时网站会给我们分 配一个sessionID，而我们只是打开了这个首页后，出去玩了再也没有访问过本网站的其它页面内容，我们是不是还在占用着网络资源呀，占用着 sessionID。那么这时怎么办呢？其实网站服务器很聪明的它会在你从第一次访问后就开始计算时间比如张三打开了某宝网站首页这时某宝网站的服务器就开始计时了 ，1秒,2秒,3秒,4秒,5秒,6秒...在2分钟的时候张三在首页上点击了一条热销商品，这时某宝网站的服务器知道后将刚才记的2分钟清空为0 这时又开始了1秒,2秒,3秒,4秒,5秒,6秒...的计时，直至计时时间达到了15分钟也就是session过期时间，这时某宝网站服务 器会认为这个用户15分钟都没有访问过我了可能己经关机出去玩了，某宝网站服务器会将这个用户在服务器开辟的内存空间释放掉，那么对应内存的 sessionID也就被收回了，等待新来的用户使用，这样我们说一个session就被销毁了。
+
+到这大家应该有点感觉了吧，session的范围有多大呀，是一个客户端，一个客户端对应着一个session ; 而一个session能存活多长时间有两个方面一方面是看客户端是否在session过期时间内访问网站，这样可以让session存活时间延长，另一方 面是设置的session过期时间是多长。session过期时间我们可以手工设置，如果没有设置就采取服务器默认设置的(例如这里用Tomcat可以在Tomcat/config/web.xml中找到一段如下的代码默认为30分钟： 
+
+<span class="nt">&lt;session-config&gt;</span>  
+        <span class="nt">&lt;session-timeout&gt;</span>30<span class="nt">&lt;session-timeout&gt;</span>  
+<span class="nt">&lt;session-config&gt;</span>  
+
+我们还可以在我们的项目中的WEB-INF/web.xml中写入上面的这段代码,设置session过期时间)。
+好了知道了这些大家想一个问题：如果我们访问了一个网站，这个网站为我们分配了一个session ，我们现在将IE浏览关闭掉，session会销毁吗？哈哈，想都不用再想了肯定不会。因为session是存放在服务器端的session的销毁只和过期时间有关系，再者客户端关闭怎么会影响到服务器端呢！ 
+牢记，sessionId是针对客户端的，一个客户端是一个sessionId，这也就是常用的登录注销处理的原因，对于同一个客户端对同一个服务器的访问，会在session中设置一个key value，这样，就算是不同帐号登录，那也只是不同key，而不会是不同session。
+如果注销使用session.invalidate的话，也就会出现无法继续登录了。
+
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="在nodejsexpress中使用session">在nodejs+express中使用session</h2>
+
+<p>在nodejs+express中使用session需要用到 <a href="https://www.npmjs.com/package/express-session">express-session</a></p>
+
+<p>第一次使用session的人，看了刚才对session的介绍，可能会觉得session的使用很复杂，其实express-session把复杂的部分都实现好了。我们只要了解如何用express-session实现就可以了。大致用两个步骤就可以实现：</p>
+<ul>
+  <li>定义好session中间件。</li>
+  <li>用session存取数据。就几个简单的操作，下面用一个例子做示范。</li>
+</ul>
+
+<hr />
+
+<h2 id="登录验证demo">登录验证Demo</h2>
+<ul>
+  <li>
+    <ol>
+      <li>用express-generator生成项目目录 <a href="http://www.expressjs.com.cn/starter/generator.html">express应用生成器</a></li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>npm install express-session –save</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>定义session中间件</li>
+    </ol>
+  </li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express-session</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// 使用express中间件</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">session</span><span class="p">({</span> 
+	<span class="na">secret</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>    <span class="c1">// reqiured option  -&gt;  对session ID cookie签名</span>
+<span class="p">}));</span>
+
+<span class="c1">// 在所有路径的前面定义一个登录中间件</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">logined</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">path</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">/login</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">next</span><span class="p">();</span>
+		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+			<span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="dl">'</span><span class="s1">/login</span><span class="dl">'</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+		<span class="nx">next</span><span class="p">();</span>
+	<span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// 登录页面登录验证</span>
+<span class="nx">router</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/login</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span> <span class="o">&amp;&amp;</span> <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">logined</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+		<span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="dl">'</span><span class="s1">login</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">username</span><span class="p">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="na">password</span><span class="p">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">cookies</span><span class="p">.</span><span class="nx">password</span><span class="p">});</span>
+	<span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// 登录</span>
+<span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">/login</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">username</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">username</span><span class="p">;</span>
+	<span class="kd">var</span> <span class="nx">password</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">password</span><span class="p">;</span>
+	<span class="kd">var</span> <span class="nx">rememberPass</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">rememberPass</span><span class="p">;</span>
+
+	<span class="c1">// 登录验证，通过验证后</span>
+	<span class="c1">// 设置session</span>
+	<span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">logined</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+	<span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span>
+		<span class="na">retflg</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+		<span class="na">retmsg</span><span class="p">:</span> <span class="dl">'</span><span class="s1">登录成功</span><span class="dl">'</span>
+	<span class="p">});</span>
+
+<span class="p">});</span>
+</code></pre></div></div>
+
+:ET

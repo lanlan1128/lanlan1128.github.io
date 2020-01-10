@@ -1,0 +1,72 @@
+I"�<ul>
+  <li>content
+    <p>本篇文章介绍如何在没有域名的情况下，用<code class="highlighter-rouge">github pages</code>搭建一个<code class="highlighter-rouge">技术博客</code>。仅作参考以及本人回顾。错误之处，请留言指正。</p>
+  </li>
+</ul>
+
+<!-- more -->
+
+<hr />
+
+<h2 id="引言">引言</h2>
+
+<p>下面引用知乎中<a href="https://www.zhihu.com/question/19907364">王超的回答</a>，从他的建议中，我决定用<code class="highlighter-rouge">github pages</code>搭建自己的博客。</p>
+
+<p><img src="/styles/images/jekyll/2017-09-07-01.png" alt="知乎回答" /></p>
+
+<hr />
+
+<h2 id="快速入门">快速入门</h2>
+
+<p>这篇文章<a href="http://jmcglone.com/guides/github-pages/">A Guide to Creating and Hosting a Personal Website on GitHub</a>详细的介绍了如何用 github page 创建一个 Jekyll 博客。包括创建一个帖子，创建一个页面来列出我们的帖子，为帖子创建自定义的链接，为博客创建 RSS。文末还有相关扩展的资源的链接。
+当你照着它的步骤全部实现后，你发现 jekyll 完全是你想要的，go ahead。</p>
+
+<h3 id="为什么要用-jekyll">为什么要用 jekyll</h3>
+
+<p>博客都有固定的头尾布局、拥有博客列表。如果用纯 html 编写博客，在头尾和博客列表的维护上存在很多冗余繁杂的工作。于是就出现了 jekyll。关于 jekyll 的更多优势，你可以在使用中慢慢总结。</p>
+
+<blockquote>
+  <p>通过上面的教程，你知道 github pages 提供 jekyll 来编译你的项目。但是如果通过这种方式创建博客，每次你修改了博客内容，如果要预览，就要把每次修改的内容提交到 github 上，所以你需要在本地上安装 jekyll，实现本地预览，直到你的文章排版达到你要的效果，再提交到 github 上，就可以省去很多不必要的工作。</p>
+</blockquote>
+
+<h2 id="进阶">进阶</h2>
+
+<h3 id="本地搭建-jekyll">本地搭建 jekyll</h3>
+
+<h4 id="安装-ruby-和-rubygems">安装 Ruby 和 RubyGems</h4>
+
+<p><a href="http://www.ruby-lang.org/zh_cn/downloads/"><code class="highlighter-rouge">Ruby</code></a>是一门语言，不用多解释。而<a href="https://rubygems.org/pages/download"><code class="highlighter-rouge">RubyGems</code></a>其实就是<code class="highlighter-rouge">Ruby</code>的包管理工具。相当<code class="highlighter-rouge">npm</code>和<code class="highlighter-rouge">Node</code>的关系。</p>
+
+<p>因为<code class="highlighter-rouge">Jekyll</code>是用<code class="highlighter-rouge">Ruby</code>语言编写的，所以我们需要安装他们。<code class="highlighter-rouge">Ruby</code>在不同平台上的安装方法会有所不同。网上有很多教程，但是对于新手来说，理解起来总是困难的。最好是在官网平台寻找相关的教程。我用的是 window 平台，在安装 ruby 上花了很多时间，最好 jekyll 官网上找到一篇很实用的教程,在 <a href="http://jekyllrb.com/docs/windows/#installation">Running Jekyll on Windows</a> 上找到。点击图示的链接地址，跟着教程走就可以了。</p>
+
+<blockquote>
+  <p>有时候我们在某些环境下(比如墙内或公司内网)可能不能正常使用 gem，这里提供了参考的解决方案<a href="https://segmentfault.com/a/1190000002435496#item-2-7">设置 git/npm/bower/gem 镜像或代理的方法</a></p>
+</blockquote>
+
+<blockquote>
+  <p>有关 Jekyll 的具体内容参考：</p>
+
+  <ul>
+    <li>中文官方主页： <a href="http://jekyll.com.cn/">http://jekyll.com.cn/</a></li>
+    <li>英文官方主页： <a href="https://jekyllrb.com/">https://jekyllrb.com/</a></li>
+  </ul>
+</blockquote>
+
+<h3 id="选择-jekyll-模板">选择 Jekyll 模板</h3>
+
+<p>当我们安装好 jekyll，并且按<a href="http://jekyll.com.cn/docs/quickstart/">教程</a>启动 jekyll 之后，可以看到<code class="highlighter-rouge">Jekyll</code>为你生成的页面非常简便。
+这个时候，你可以选择用 jekyll 模板来完善自己的博客站点，如何使用 jekyll 模板</p>
+
+<ul>
+  <li>专门收集模板的网站：<a href="http://jekyllthemes.org/">http://jekyllthemes.org/</a></li>
+  <li>在<code class="highlighter-rouge">Google</code>上搜索<code class="highlighter-rouge">Jekyll</code>和<code class="highlighter-rouge">Github</code>，在人家的仓库中<code class="highlighter-rouge">download</code>别人的模板(要注意人家是否允许拷贝哦)。</li>
+</ul>
+
+<hr />
+
+<h2 id="注意事项">注意事项</h2>
+
+<blockquote>
+  <p>如果你用浏览器打开 localhost:4000,出现空白页面，需要写把 4000 端口关闭，然后再开启 jekyll 服务。</p>
+</blockquote>
+:ET

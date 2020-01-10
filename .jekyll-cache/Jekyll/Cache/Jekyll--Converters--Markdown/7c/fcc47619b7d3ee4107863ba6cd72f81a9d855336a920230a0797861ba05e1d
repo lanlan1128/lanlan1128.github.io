@@ -1,0 +1,42 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#使用svn命令行" id="markdown-toc-使用svn命令行">使用svn命令行</a></li>
+  <li><a href="#svn-ignore" id="markdown-toc-svn-ignore">svn ignore</a></li>
+</ul>
+
+<p><code class="highlighter-rouge">windows</code>下<code class="highlighter-rouge">svn</code>的常用命令行和使用方法</p>
+
+<!-- more -->
+
+<hr />
+
+<h2 id="使用svn命令行">使用svn命令行</h2>
+<p>如果你安装了TortoiseSVN，打开命令行输入svn，提示 command not found，证明你在安装TortoiseSVN的时候，没有选择命令行组件。解决方案有</p>
+<ul>
+  <li>重新安装TortoiseSVN，安装过程中选择用svn命令行组件<br />
+<img src="/styles/images/tool/svn/1.png" alt="svn安装" width="50%" /></li>
+</ul>
+
+<hr />
+
+<h2 id="svn-ignore">svn ignore</h2>
+<blockquote>
+  <p>在开发过程中，我们可能会遇到这种情况，svn目录中的某些文件不想提交到服务器上，例如node_modules文件夹（因为pagepack.json文件已维护了这些信息）。对命令行不熟悉的可以用下面这种更快捷的方法，参考链接 <a href="http://www.cnblogs.com/yelaiju/p/3145297.html">让SVN(TortoiseSVN)提交时忽略bin和obj目录</a>.</p>
+</blockquote>
+
+<p>步骤如下：</p>
+<ul>
+  <li>
+    <p>打开TortoiseSVN properties属性编辑窗口<br />
+  <img src="/styles/images/tool/svn/2.png" alt="svn安装" width="50%" /></p>
+  </li>
+  <li>
+    <p>选择高级选项<br />
+  <img src="/styles/images/tool/svn/3.png" alt="svn安装" width="50%" /></p>
+  </li>
+  <li>
+    <p>编辑ignore规则<br />
+  <img src="/styles/images/tool/svn/4.png" alt="svn安装" width="50%" /></p>
+  </li>
+</ul>
+
+:ET
