@@ -1,0 +1,55 @@
+I"]	<ul>
+  <li>content
+    <p>介绍 session 和 token 的工作原理</p>
+  </li>
+</ul>
+
+<!-- more -->
+
+<hr />
+
+<h2 id="session">session</h2>
+
+<p>session 技术是为了解决 http 协议是无状态的协议（即 http 协议无法让服务端识别两个请求是否来自同一个客户端）而建立机制。session 的工作流程一般如下：</p>
+
+<ul>
+  <li>1.客户端向服务端发送请求</li>
+  <li>2.服务端接收到请求后，给每个客户端生成唯一的标识 sessionID， 如果 sessionID 是首次生成，则在响应头的 set-cookie 字段写入 sessionID</li>
+  <li>3.客户端以后向服务端发送请求时，请求头会自动携带 cookie，服务端即可通过请求头获取 cookie 中的 sessionID</li>
+</ul>
+
+<p>流程图参考：<br />
+<img src="/styles/images/server/session.png" alt="session+cookie工作流程" width="500" /></p>
+
+<p>示例 demo：
+<a href="">nodejs+express 实现的 session 登录</a></p>
+
+<h3 id="sessioncookie-实现的缺陷">session+cookie 实现的缺陷</h3>
+
+<ul>
+  <li>1.分布式服务的 session 不能实现共享。需要对 session 做持久化管理</li>
+  <li>2.服务端通过 set-cookie 的方式向客户端写入 cookie，客户端的请求就会自动携带 cookie，容易被其它网站攻击（详见上面的示例 demo）</li>
+</ul>
+
+<h2 id="token">token</h2>
+
+<p>token 可以理解为用户登录成功后，服务端给用户发送一个用户的令牌（包含用户信息），客户端把令牌存储在本地，以后每次向服务端发请求时携带上令牌，服务端通过用户令牌，查询对应的用户。
+JWT 是其中一种实现方式，关于 JWT 的工作原理和用法，可以参考阮一峰老师的<a href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html">JSON Web Token 入门教程</a></p>
+
+<h3 id="存储-token-的方式">存储 token 的方式</h3>
+
+<ul>
+  <li>1.存储到 cookie 中</li>
+  <li>2.存储到 localStorage 中</li>
+</ul>
+
+<h3 id="客户端发送-token-的方式">客户端发送 token 的方式</h3>
+
+<ul>
+  <li>1.可以把 token 放到 cookie 中，以后每次请求可以自动发送，但是这样跨域不能访问</li>
+  <li>2.可以把 token 写到每次请求的请求头的 Authorization 字段，对于 get 请求，可以写道 url 后面</li>
+</ul>
+
+<p>示例 demo：
+<a href="">nodejs+express 实现的 session 登录</a></p>
+:ET

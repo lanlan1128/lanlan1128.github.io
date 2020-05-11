@@ -6,4 +6,4 @@
 
 ## 关于这个 Jekyll 模板主题
 
-本博客使用的 jekyll 模板地址 [maoxiaoke](https://github.com/maoxiaoke)
+本博客使用的 jekyll 模板地址 [maoxiaoke](https://github.com/maoxiaoke/maoxiaoke.github.io)

@@ -41,7 +41,7 @@ tag: Jekyll
 
 [`Ruby`](http://www.ruby-lang.org/zh_cn/downloads/)是一门语言，不用多解释。而[`RubyGems`](https://rubygems.org/pages/download)其实就是`Ruby`的包管理工具。相当`npm`和`Node`的关系。
 
-因为`Jekyll`是用`Ruby`语言编写的，所以我们需要安装他们。`Ruby`在不同平台上的安装方法会有所不同。网上有很多教程，但是对于新手来说，理解起来总是困难的。最好是在官网平台寻找相关的教程。我用的是 window 平台，在安装 ruby 上花了很多时间，最好 jekyll 官网上找到一篇很实用的教程,在 [Running Jekyll on Windows](http://jekyllrb.com/docs/windows/#installation) 上找到。点击图示的链接地址，跟着教程走就可以了。
+因为`Jekyll`是用`Ruby`语言编写的，所以我们需要安装他们。`Ruby`在不同平台上的安装方法会有所不同。网上有很多教程，但是对于新手来说，理解起来总是困难的。最后是在官网平台寻找相关的教程。我用的是 window 平台，在安装 ruby 上花了很多时间，最好 jekyll 官网上找到一篇很实用的教程,在 [Running Jekyll on Windows](http://jekyllrb.com/docs/windows/#installation) 上找到。点击图示的链接地址，跟着教程走就可以了。
 
 > 有时候我们在某些环境下(比如墙内或公司内网)可能不能正常使用 gem，这里提供了参考的解决方案[设置 git/npm/bower/gem 镜像或代理的方法](https://segmentfault.com/a/1190000002435496#item-2-7)
 
